@@ -1,6 +1,5 @@
 import 'package:blitzz/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,7 +14,6 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         body: Center(
           child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
@@ -26,7 +24,6 @@ class HomeScreen extends StatelessWidget {
                 height: _height / 2 - 70.0,
                 width: _width - 20.0,
                 child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
@@ -102,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, '/directions');
+                      Navigator.pushNamed(context, '/upload_a_picture');
                     },
                     child: Container(
                       child: Center(
@@ -129,7 +126,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, '/directions');
+                      Navigator.pushNamed(context, '/take_a_picture');
                     },
                     child: Container(
                       child: Center(

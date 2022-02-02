@@ -49,7 +49,7 @@ class _TakeAPictureState extends State<TakeAPicture> {
                             Border.all(color: _theme.primaryColor, width: 2),
                         borderRadius: BorderRadius.circular(12)),
                     child: Image.asset(
-                      "assets/address.jpeg",
+                      "assets/images/address.jpeg",
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -72,7 +72,9 @@ class _TakeAPictureState extends State<TakeAPicture> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 10, width * 0.05, 15),
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, '/directions');
+                        },
                         child: Container(
                             decoration: BoxDecoration(
                               color: Colors.white,

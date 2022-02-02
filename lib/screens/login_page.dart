@@ -114,8 +114,7 @@ class LoginPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Navigator.popAndPushNamed(
-                                        context, '/take_a_picture');
+                                    Navigator.popAndPushNamed(context, '/home');
                                   },
                                   child: Container(
                                       decoration: BoxDecoration(
@@ -150,7 +149,8 @@ class LoginPage extends StatelessWidget {
                           SizedBox(height: height / 8),
                           SizedBox(
                               height: height / 4,
-                              child: Image.asset("assets/blitzz_logo.png")),
+                              child:
+                                  Image.asset("assets/images/blitzz_logo.png")),
                         ],
                       )),
                   Container(

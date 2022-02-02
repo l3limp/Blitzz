@@ -2,14 +2,14 @@ import 'package:blitzz/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ChooseAPicture extends StatefulWidget {
-  const ChooseAPicture({Key? key}) : super(key: key);
+class UploadAPicture extends StatefulWidget {
+  const UploadAPicture({Key? key}) : super(key: key);
 
   @override
-  _ChooseAPictureState createState() => _ChooseAPictureState();
+  _UploadAPictureState createState() => _UploadAPictureState();
 }
 
-class _ChooseAPictureState extends State<ChooseAPicture> {
+class _UploadAPictureState extends State<UploadAPicture> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -25,7 +25,7 @@ class _ChooseAPictureState extends State<ChooseAPicture> {
             centerTitle: true,
             elevation: 0,
             backgroundColor: Colors.transparent,
-            title: Text("TAKE A PICTURE",
+            title: Text("UPLOAD A PICTURE",
                 style: GoogleFonts.roboto(
                   textStyle: TextStyle(
                     color: _theme.primaryColor,
@@ -49,7 +49,7 @@ class _ChooseAPictureState extends State<ChooseAPicture> {
                             Border.all(color: _theme.primaryColor, width: 2),
                         borderRadius: BorderRadius.circular(12)),
                     child: Image.asset(
-                      "assets/address.jpeg",
+                      "assets/images/address.jpeg",
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -72,7 +72,9 @@ class _ChooseAPictureState extends State<ChooseAPicture> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 10, width * 0.05, 15),
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, '/directions');
+                        },
                         child: Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
