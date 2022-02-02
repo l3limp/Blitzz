@@ -102,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      print("pressed");
+                      Navigator.pushNamed(context, '/directions');
                     },
                     child: Container(
                       child: Center(
@@ -129,7 +129,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      print("pressed");
+                      Navigator.pushNamed(context, '/directions');
                     },
                     child: Container(
                       child: Center(
