@@ -1,3 +1,4 @@
+import 'package:blitzz/screens/home_screen.dart';
 import 'package:blitzz/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ void main() {
       ),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const SplashScreen(),
+        '/': (context) => const HomeScreen(),
       },
     ),
   );
