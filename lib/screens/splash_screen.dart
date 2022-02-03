@@ -14,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(milliseconds: 670),
+    duration: const Duration(milliseconds: 700),
     vsync: this,
   );
   late final Animation<Offset> _offsetAnimation1 = Tween<Offset>(
