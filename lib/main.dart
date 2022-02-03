@@ -1,4 +1,3 @@
-import 'package:blitzz/screens/animation_test.dart';
 import 'package:blitzz/screens/direction_screen.dart';
 import 'package:blitzz/screens/home_screen.dart';
 import 'package:blitzz/screens/login_page.dart';
@@ -18,7 +17,8 @@ void main() {
       ),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const OcrTest(),
+        '/': (context) => const SplashScreen(),
+        '/initialise': (context) => const Initialising(),
         '/home': (context) => const HomeScreen(),
         '/directions': (context) => const DirectionScreen(),
         '/login_page': (context) => const LoginPage(),

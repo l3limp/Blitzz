@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "239921499178",
+    "project_id": "blitzz-8a4e8",
+    "storage_bucket": "blitzz-8a4e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239921499178:android:c6ae1fc961263509ee8753",
+        "android_client_info": {
+          "package_name": "com.brax.blitzz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "239921499178-moel0novqsmtb28pq54gpe3sqc77lmrn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkc9DG47uqrEGRwfFDkfzVs3KQ5xrRO3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "239921499178-moel0novqsmtb28pq54gpe3sqc77lmrn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
