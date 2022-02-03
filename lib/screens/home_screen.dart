@@ -12,17 +12,17 @@ class HomeScreen extends StatelessWidget {
     final _theme = OurTheme();
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
-    late CollectionReference _users;
+    late CollectionReference _recents;
     FirebaseAuth _auth = FirebaseAuth.instance;
     User? _user = FirebaseAuth.instance.currentUser;
-    _users = FirebaseFirestore.instance.collection('users');
+    _recents = FirebaseFirestore.instance.collection('recent_locations');
 
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Center(
           child: SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             child: Column(
               children: [
                 Container(
