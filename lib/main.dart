@@ -1,3 +1,4 @@
+import 'package:blitzz/screens/animation_test.dart';
 import 'package:blitzz/screens/direction_screen.dart';
 import 'package:blitzz/screens/home_screen.dart';
 import 'package:blitzz/screens/login_page.dart';
