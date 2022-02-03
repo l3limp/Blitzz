@@ -29,14 +29,14 @@ class HomeScreen extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
-                  color: _theme.primaryColor,
+                  color: Colors.white,
                   boxShadow: [
                     BoxShadow(
                         color: _theme.primaryColor,
                         blurRadius: 1,
                         offset: const Offset(1, 1)),
                   ],
-                  border: Border.all(color: Colors.white, width: 2),
+                  border: Border.all(color: _theme.primaryColor, width: 2),
                 ),
                 height: _height * 0.44,
                 width: _width * 0.93,
@@ -46,8 +46,8 @@ class HomeScreen extends StatelessWidget {
                     Text(
                       "RECENT",
                       style: GoogleFonts.roboto(
-                        textStyle: const TextStyle(
-                          color: Colors.white,
+                        textStyle: TextStyle(
+                          color: _theme.primaryColor,
                           letterSpacing: 2,
                           fontSize: 35,
                           fontWeight: FontWeight.w600,
@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
-                        color: _theme.secondaryColor,
+                        color: Colors.white,
                       ),
                       height: _height * 0.28,
                       width: _width * 0.82,
@@ -71,8 +71,8 @@ class HomeScreen extends StatelessWidget {
                             leading: Text(
                               "Bla Bla Bla Bla",
                               style: GoogleFonts.roboto(
-                                textStyle: const TextStyle(
-                                  color: Colors.white,
+                                textStyle: TextStyle(
+                                  color: _theme.primaryColor,
                                   fontSize: 20,
                                 ),
                               ),
@@ -85,8 +85,8 @@ class HomeScreen extends StatelessWidget {
                             leading: Text(
                               "Bla Bla Bla Bla",
                               style: GoogleFonts.roboto(
-                                textStyle: const TextStyle(
-                                  color: Colors.white,
+                                textStyle: TextStyle(
+                                  color: _theme.primaryColor,
                                   fontSize: 20,
                                 ),
                               ),
@@ -99,8 +99,8 @@ class HomeScreen extends StatelessWidget {
                             leading: Text(
                               "Bla Bla Bla Bla",
                               style: GoogleFonts.roboto(
-                                textStyle: const TextStyle(
-                                  color: Colors.white,
+                                textStyle: TextStyle(
+                                  color: _theme.primaryColor,
                                   fontSize: 20,
                                 ),
                               ),
@@ -128,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                           style: GoogleFonts.roboto(
                             textStyle: const TextStyle(
                               color: Colors.white,
-                              fontSize: 30,
+                              fontSize: 28,
                               letterSpacing: 1,
                             ),
                           ),
@@ -136,7 +136,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
-                        color: _theme.primaryColor,
+                        color: _theme.secondaryColor,
                         boxShadow: [
                           BoxShadow(
                               color: _theme.primaryColor,
@@ -169,7 +169,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
-                        color: _theme.primaryColor,
+                        color: _theme.secondaryColor,
                         boxShadow: [
                           BoxShadow(
                               color: _theme.primaryColor,
@@ -187,17 +187,33 @@ class HomeScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Hero(
-                    tag: 'logo',
-                    child: Material(
-                      color: Colors.transparent,
-                      child: SizedBox(
-                          height: _height * 0.15,
-                          child: const Image(
-                            image: AssetImage("assets/images/blitz_logo.png"),
-                            fit: BoxFit.cover,
-                          )),
+                  Container(
+                    child: Center(
+                      child: Text(
+                        _user!.email.toString(),
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                            color: _theme.primaryColor,
+                            letterSpacing: 1,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
                     ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                            color: _theme.primaryColor,
+                            blurRadius: 1,
+                            offset: const Offset(1, 1)),
+                      ],
+                      border: Border.all(color: _theme.primaryColor, width: 2),
+                    ),
+                    height: _height * 0.1,
+                    width: _width * 0.6,
                   ),
                   InkWell(
                     onTap: () async {
@@ -210,27 +226,28 @@ class HomeScreen extends StatelessWidget {
                           "Sign Out",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.roboto(
-                            textStyle: const TextStyle(
-                              color: Colors.white,
+                            textStyle: TextStyle(
+                              color: _theme.primaryColor,
                               letterSpacing: 1,
-                              fontSize: 24,
+                              fontSize: 16,
                             ),
                           ),
                         ),
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
-                        color: _theme.primaryColor,
+                        color: Colors.white,
                         boxShadow: [
                           BoxShadow(
                               color: _theme.primaryColor,
                               blurRadius: 2,
                               offset: const Offset(1, 2)),
                         ],
-                        border: Border.all(color: Colors.white, width: 2),
+                        border:
+                            Border.all(color: _theme.primaryColor, width: 2),
                       ),
                       height: _height * 0.1,
-                      width: _width * 0.2,
+                      width: _width * 0.25,
                     ),
                   ),
                 ],

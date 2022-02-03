@@ -15,9 +15,9 @@ class LoginPage extends StatelessWidget {
     _firebaseAuth = FirebaseAuth.instance;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
     OurTheme _theme = OurTheme();
+    String _email = "";
+    String _password = "";
     return SafeArea(
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -48,7 +48,7 @@ class LoginPage extends StatelessWidget {
                                       width: width * 0.4,
                                       child: Center(
                                         child: Text("BLITZZ",
-                                            style: GoogleFonts.lato(
+                                            style: GoogleFonts.roboto(
                                               textStyle: TextStyle(
                                                   color: _theme.primaryColor,
                                                   letterSpacing: .5,
@@ -61,8 +61,9 @@ class LoginPage extends StatelessWidget {
                                 Container(
                                   width: width * 0.5,
                                   child: TextFormField(
-                                    onChanged: (text) {},
-                                    controller: _emailController,
+                                    onChanged: (text) {
+                                      _email = text;
+                                    },
                                     decoration: InputDecoration(
                                       border: const OutlineInputBorder(),
                                       labelText: "Email",
@@ -79,7 +80,7 @@ class LoginPage extends StatelessWidget {
                                               width: 1.3)),
                                     ),
                                     cursorColor: _theme.secondaryColor,
-                                    style: GoogleFonts.lato(
+                                    style: GoogleFonts.roboto(
                                       textStyle: TextStyle(
                                           color: _theme.primaryColor,
                                           letterSpacing: .5),
@@ -93,7 +94,9 @@ class LoginPage extends StatelessWidget {
                                 Container(
                                   width: width * 0.5,
                                   child: TextFormField(
-                                    controller: _passwordController,
+                                    onChanged: (text) {
+                                      _password = text;
+                                    },
                                     decoration: InputDecoration(
                                       border: const OutlineInputBorder(),
                                       labelText: "Password",
@@ -110,7 +113,7 @@ class LoginPage extends StatelessWidget {
                                               width: 1.3)),
                                     ),
                                     cursorColor: _theme.secondaryColor,
-                                    style: GoogleFonts.lato(
+                                    style: GoogleFonts.roboto(
                                       textStyle: TextStyle(
                                           color: _theme.primaryColor,
                                           letterSpacing: .5),
@@ -123,7 +126,7 @@ class LoginPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    if (_passwordController.text.length < 7) {
+                                    if (_password.length < 7) {
                                       const snackBar = SnackBar(
                                           content: Text(
                                               'Please choose a password with more than 6 characters'));
@@ -131,9 +134,7 @@ class LoginPage extends StatelessWidget {
                                           .showSnackBar(snackBar);
                                     } else {
                                       _signInOrSignUp(
-                                          context,
-                                          _emailController.text,
-                                          _passwordController.text);
+                                          context, _email, _password);
                                     }
                                   },
                                   child: Container(
@@ -155,7 +156,7 @@ class LoginPage extends StatelessWidget {
                                       child: Center(
                                         child: Text(
                                           "Sign In",
-                                          style: GoogleFonts.lato(
+                                          style: GoogleFonts.roboto(
                                             textStyle: TextStyle(
                                                 color: _theme.primaryColor,
                                                 letterSpacing: .5),
@@ -167,16 +168,10 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: height / 8),
-                          Hero(
-                            tag: 'logo',
-                            child: Material(
-                              color: Colors.transparent,
-                              child: SizedBox(
-                                  height: height / 4,
-                                  child: Image.asset(
-                                      "assets/images/blitzz_logo.png")),
-                            ),
-                          ),
+                          SizedBox(
+                              height: height / 4,
+                              child:
+                                  Image.asset("assets/images/blitzz_logo.png")),
                         ],
                       )),
                   Container(

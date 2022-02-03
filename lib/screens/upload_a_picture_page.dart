@@ -101,7 +101,7 @@ class _UploadAPictureState extends State<UploadAPicture> {
                                 children: [
                                   Text(
                                     "BLITZZ",
-                                    style: GoogleFonts.lato(
+                                    style: GoogleFonts.roboto(
                                       textStyle: TextStyle(
                                           color: _theme.secondaryColor,
                                           letterSpacing: .5,

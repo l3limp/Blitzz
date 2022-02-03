@@ -101,7 +101,7 @@ class _TakeAPictureState extends State<TakeAPicture> {
                                 children: [
                                   Text(
                                     "BLITZZ",
-                                    style: GoogleFonts.lato(
+                                    style: GoogleFonts.roboto(
                                       textStyle: TextStyle(
                                           color: _theme.secondaryColor,
                                           letterSpacing: .5,
