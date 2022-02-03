@@ -147,10 +147,16 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: height / 8),
-                          SizedBox(
-                              height: height / 4,
-                              child:
-                                  Image.asset("assets/images/blitzz_logo.png")),
+                          Hero(
+                            tag: 'logo',
+                            child: Material(
+                              color: Colors.transparent,
+                              child: SizedBox(
+                                  height: height / 4,
+                                  child: Image.asset(
+                                      "assets/images/blitzz_logo.png")),
+                            ),
+                          ),
                         ],
                       )),
                   Container(

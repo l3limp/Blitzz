@@ -1,8 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.blitzz">
+    
    <application
         android:label="blitzz"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyAsUDVWJpw7ghpcpN_u8so6B5EvykVcECs"/>
+           
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

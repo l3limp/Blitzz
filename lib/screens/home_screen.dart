@@ -10,6 +10,7 @@ class HomeScreen extends StatelessWidget {
     final _theme = OurTheme();
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -175,12 +176,18 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                  height: _height * 0.17,
-                  child: const Image(
-                    image: AssetImage("assets/images/blitz_logo.png"),
-                    fit: BoxFit.cover,
-                  ))
+              Hero(
+                tag: 'logo',
+                child: Material(
+                  color: Colors.transparent,
+                  child: SizedBox(
+                      height: _height * 0.17,
+                      child: const Image(
+                        image: AssetImage("assets/images/blitz_logo.png"),
+                        fit: BoxFit.cover,
+                      )),
+                ),
+              )
             ],
           ),
         ),
