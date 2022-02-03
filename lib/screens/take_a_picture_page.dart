@@ -9,6 +9,8 @@ class TakeAPicture extends StatefulWidget {
   _TakeAPictureState createState() => _TakeAPictureState();
 }
 
+late TextEditingController _controller = TextEditingController();
+
 class _TakeAPictureState extends State<TakeAPicture> {
   @override
   Widget build(BuildContext context) {
@@ -76,7 +78,8 @@ class _TakeAPictureState extends State<TakeAPicture> {
                       padding: EdgeInsets.fromLTRB(0, 10, width * 0.05, 15),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, '/directions');
+                          Navigator.pushNamed(context, '/directions',
+                              arguments: {'address': _controller.text});
                         },
                         child: Container(
                             decoration: BoxDecoration(
@@ -126,6 +129,7 @@ class _TakeAPictureState extends State<TakeAPicture> {
                     width: width * 0.9,
                     height: height * 0.22,
                     child: TextFormField(
+                      controller: _controller,
                       onChanged: (text) {},
                       maxLines: 10,
                       decoration: InputDecoration(

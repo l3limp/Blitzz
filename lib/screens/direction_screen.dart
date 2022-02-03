@@ -14,6 +14,7 @@ class DirectionScreen extends StatefulWidget {
 late GoogleMapController _controller;
 late List<Marker> _markers = [];
 List<Location> locations = [];
+late Map arguments;
 
 class _DirectionScreenState extends State<DirectionScreen> {
   @override
@@ -21,6 +22,7 @@ class _DirectionScreenState extends State<DirectionScreen> {
     final _theme = OurTheme();
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
+    arguments = ModalRoute.of(context)!.settings.arguments as Map;
 
     return SafeArea(
       child: Scaffold(
@@ -32,6 +34,13 @@ class _DirectionScreenState extends State<DirectionScreen> {
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 0.0,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  goToPlace(arguments['address']);
+                },
+                icon: const Icon(Icons.location_on))
+          ],
           title: Text(
             "BLITZZ",
             style: TextStyle(
@@ -116,8 +125,10 @@ class _DirectionScreenState extends State<DirectionScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      _launchMaps(locations[0].latitude.toString(),
-                          locations[0].longitude.toString());
+                      if (arguments['address'].toString().isNotEmpty) {
+                        _launchMaps(locations[0].latitude.toString(),
+                            locations[0].longitude.toString());
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -165,33 +176,32 @@ class _DirectionScreenState extends State<DirectionScreen> {
 
   onMapCreated(controller) {
     _controller = controller;
-    goToPlace();
+    goToPlace(arguments['address']);
   }
 
-  goToPlace() async {
-    locations = await locationFromAddress(
-        "AWHO 4A 701, AWHO Gurjinder Vihar, Chi II, greater noida GREATER NOIDA 201310 UTTAR PRADESH");
-    _controller.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: LatLng(locations[0].latitude, locations[0].longitude),
-          zoom: 15,
-          tilt: 15,
-          bearing: 10,
+  goToPlace(String address) async {
+    if (address.isNotEmpty) {
+      locations = await locationFromAddress(address);
+      _controller.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(locations[0].latitude, locations[0].longitude),
+            zoom: 15,
+            tilt: 15,
+            bearing: 10,
+          ),
         ),
-      ),
-    );
+      );
 
-    setState(() {
-      _markers.add(Marker(
-          markerId: const MarkerId("MarkerID"),
-          draggable: false,
-          infoWindow: const InfoWindow(
-              title: "Your Destination",
-              snippet:
-                  "AWHO 4A 701, AWHO Gurjinder Vihar, Chi II, greater noida GREATER NOIDA 201310 UTTAR PRADESH"),
-          position: LatLng(locations[0].latitude, locations[0].longitude)));
-    });
+      setState(() {
+        _markers.add(Marker(
+            markerId: const MarkerId("MarkerID"),
+            draggable: false,
+            infoWindow: InfoWindow(
+                title: "Your Destination", snippet: arguments['address']),
+            position: LatLng(locations[0].latitude, locations[0].longitude)));
+      });
+    }
   }
 
   _launchMaps(String lat, String long) async {
