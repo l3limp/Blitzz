@@ -1,5 +1,6 @@
 import 'package:blitzz/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DirectionScreen extends StatelessWidget {
   const DirectionScreen({Key? key}) : super(key: key);
@@ -34,22 +35,24 @@ class DirectionScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                height: _height / 2 + _height / 5 - 25.0,
-                width: _width - 30.0,
+                height: _height * 0.72,
+                width: _width * 0.93,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15.0),
                     color: Colors.white,
                     border: Border.all(color: _theme.primaryColor, width: 2.0)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.0),
-                  child: const Image(
-                    image: AssetImage("assets/images/map.jpg"),
-                    fit: BoxFit.cover,
+                  child: GoogleMap(
+                    compassEnabled: false,
+                    zoomControlsEnabled: false,
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(15.3911, 73.8782),
+                      zoom: 16,
+                      tilt: 20,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 20.0,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -58,9 +61,16 @@ class DirectionScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15.0),
                       color: _theme.secondaryColor,
+                      boxShadow: [
+                        BoxShadow(
+                            color: _theme.primaryColor,
+                            blurRadius: 2,
+                            offset: const Offset(1, 2)),
+                      ],
+                      border: Border.all(color: Colors.white, width: 2),
                     ),
-                    width: _width / 3 + 10.0,
-                    height: _height / 8,
+                    width: _width * 0.38,
+                    height: _height * 0.08,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -74,7 +84,7 @@ class DirectionScreen extends StatelessWidget {
                           style: TextStyle(
                               fontFamily: _theme.font,
                               color: Colors.white,
-                              fontSize: 27.0,
+                              fontSize: 24.0,
                               letterSpacing: 1.5,
                               fontWeight: FontWeight.w600),
                         )
@@ -83,11 +93,18 @@ class DirectionScreen extends StatelessWidget {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15.0),
+                      borderRadius: BorderRadius.circular(10.0),
                       color: _theme.secondaryColor,
+                      boxShadow: [
+                        BoxShadow(
+                            color: _theme.primaryColor,
+                            blurRadius: 2,
+                            offset: const Offset(1, 2)),
+                      ],
+                      border: Border.all(color: Colors.white, width: 2),
                     ),
-                    width: _width / 3 + 90.0,
-                    height: _height / 8,
+                    width: _width * 0.54,
+                    height: _height * 0.08,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -101,7 +118,7 @@ class DirectionScreen extends StatelessWidget {
                           style: TextStyle(
                               fontFamily: _theme.font,
                               color: Colors.white,
-                              fontSize: 27.0,
+                              fontSize: 24.0,
                               letterSpacing: 1.5,
                               fontWeight: FontWeight.w600),
                         )

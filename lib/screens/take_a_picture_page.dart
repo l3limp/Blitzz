@@ -46,11 +46,14 @@ class _TakeAPictureState extends State<TakeAPicture> {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border:
-                            Border.all(color: _theme.primaryColor, width: 2),
+                            Border.all(color: _theme.primaryColor, width: 3),
                         borderRadius: BorderRadius.circular(12)),
-                    child: Image.asset(
-                      "assets/images/address.jpeg",
-                      fit: BoxFit.fill,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        "assets/images/address.jpeg",
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                 ),
