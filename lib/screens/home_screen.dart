@@ -184,17 +184,56 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Hero(
-                tag: 'logo',
-                child: Material(
-                  color: Colors.transparent,
-                  child: SizedBox(
-                      height: _height * 0.17,
-                      child: const Image(
-                        image: AssetImage("assets/images/blitz_logo.png"),
-                        fit: BoxFit.cover,
-                      )),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Hero(
+                    tag: 'logo',
+                    child: Material(
+                      color: Colors.transparent,
+                      child: SizedBox(
+                          height: _height * 0.15,
+                          child: const Image(
+                            image: AssetImage("assets/images/blitz_logo.png"),
+                            fit: BoxFit.cover,
+                          )),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      await _auth.signOut();
+                      Navigator.pushNamed(context, '/');
+                    },
+                    child: Container(
+                      child: Center(
+                        child: Text(
+                          "Sign Out",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.roboto(
+                            textStyle: const TextStyle(
+                              color: Colors.white,
+                              letterSpacing: 1,
+                              fontSize: 24,
+                            ),
+                          ),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        color: _theme.primaryColor,
+                        boxShadow: [
+                          BoxShadow(
+                              color: _theme.primaryColor,
+                              blurRadius: 2,
+                              offset: const Offset(1, 2)),
+                        ],
+                        border: Border.all(color: Colors.white, width: 2),
+                      ),
+                      height: _height * 0.1,
+                      width: _width * 0.2,
+                    ),
+                  ),
+                ],
               )
             ],
           ),
