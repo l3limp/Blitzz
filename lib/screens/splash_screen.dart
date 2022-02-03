@@ -106,86 +106,90 @@ class _SplashScreenState extends State<SplashScreen>
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width * 0.6,
                       color: Colors.white,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.55,
-                            child: AnimationLimiter(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children:
-                                    AnimationConfiguration.toStaggeredList(
-                                  duration: const Duration(milliseconds: 1200),
-                                  childAnimationBuilder: (widget) =>
-                                      SlideAnimation(
-                                    horizontalOffset: -50.0,
-                                    child: FadeInAnimation(
-                                      child: widget,
-                                    ),
-                                  ),
-                                  children: [
-                                    Text(
-                                      "THINK\n",
-                                      style: GoogleFonts.roboto(
-                                        textStyle: TextStyle(
-                                            color: _theme.secondaryColor,
-                                            letterSpacing: .5,
-                                            fontSize: 30),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.55,
+                              child: AnimationLimiter(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children:
+                                      AnimationConfiguration.toStaggeredList(
+                                    duration:
+                                        const Duration(milliseconds: 1200),
+                                    childAnimationBuilder: (widget) =>
+                                        SlideAnimation(
+                                      horizontalOffset: -50.0,
+                                      child: FadeInAnimation(
+                                        child: widget,
                                       ),
                                     ),
-                                    Text(
-                                      "TRAVEL?\n",
-                                      style: GoogleFonts.roboto(
-                                        textStyle: TextStyle(
-                                            color: _theme.primaryColor,
-                                            letterSpacing: .5,
-                                            fontSize: 30),
+                                    children: [
+                                      Text(
+                                        "THINK\n",
+                                        style: GoogleFonts.roboto(
+                                          textStyle: TextStyle(
+                                              color: _theme.secondaryColor,
+                                              letterSpacing: .5,
+                                              fontSize: 30),
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      "THINK\n",
-                                      style: GoogleFonts.roboto(
-                                        textStyle: TextStyle(
-                                            color: _theme.secondaryColor,
-                                            letterSpacing: .5,
-                                            fontSize: 30),
+                                      Text(
+                                        "TRAVEL?\n",
+                                        style: GoogleFonts.roboto(
+                                          textStyle: TextStyle(
+                                              color: _theme.primaryColor,
+                                              letterSpacing: .5,
+                                              fontSize: 30),
+                                        ),
                                       ),
-                                    ),
-                                    Hero(
-                                      tag: 'tag',
-                                      child: Material(
-                                        color: Colors.transparent,
-                                        child: SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.4,
-                                          child: Center(
-                                            child: Text(
-                                              "BLITZZ\n",
-                                              style: GoogleFonts.roboto(
-                                                textStyle: TextStyle(
-                                                    color: _theme.primaryColor,
-                                                    letterSpacing: .5,
-                                                    fontSize: 30),
+                                      Text(
+                                        "THINK\n",
+                                        style: GoogleFonts.roboto(
+                                          textStyle: TextStyle(
+                                              color: _theme.secondaryColor,
+                                              letterSpacing: .5,
+                                              fontSize: 30),
+                                        ),
+                                      ),
+                                      Hero(
+                                        tag: 'tag',
+                                        child: Material(
+                                          color: Colors.transparent,
+                                          child: SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.4,
+                                            child: Center(
+                                              child: Text(
+                                                "BLITZZ\n",
+                                                style: GoogleFonts.roboto(
+                                                  textStyle: TextStyle(
+                                                      color:
+                                                          _theme.primaryColor,
+                                                      letterSpacing: .5,
+                                                      fontSize: 30),
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                              height: MediaQuery.of(context).size.height / 8),
-                          SizedBox(
-                              height: MediaQuery.of(context).size.height / 4,
-                              child:
-                                  Image.asset("assets/images/blitzz_logo.png")),
-                        ],
+                            SizedBox(
+                                height: MediaQuery.of(context).size.height / 8),
+                            SizedBox(
+                                height: MediaQuery.of(context).size.height / 4,
+                                child: Image.asset(
+                                    "assets/images/blitzz_logo.png")),
+                          ],
+                        ),
                       )),
                   SlideTransition(
                     position: _offsetAnimation1,
