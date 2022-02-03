@@ -1,6 +1,7 @@
 import 'package:blitzz/screens/direction_screen.dart';
 import 'package:blitzz/screens/home_screen.dart';
 import 'package:blitzz/screens/login_page.dart';
+import 'package:blitzz/screens/ocr_test.dart';
 import 'package:blitzz/screens/splash_screen.dart';
 import 'package:blitzz/screens/take_a_picture_page.dart';
 import 'package:blitzz/screens/upload_a_picture_page.dart';
