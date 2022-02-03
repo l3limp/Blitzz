@@ -1,14 +1,22 @@
 import 'package:blitzz/theme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+late FirebaseAuth _firebaseAuth;
+late CollectionReference users;
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    _firebaseAuth = FirebaseAuth.instance;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _passwordController = TextEditingController();
     OurTheme _theme = OurTheme();
     return SafeArea(
       child: GestureDetector(
@@ -54,6 +62,7 @@ class LoginPage extends StatelessWidget {
                                   width: width * 0.5,
                                   child: TextFormField(
                                     onChanged: (text) {},
+                                    controller: _emailController,
                                     decoration: InputDecoration(
                                       border: const OutlineInputBorder(),
                                       labelText: "Email",
@@ -84,7 +93,7 @@ class LoginPage extends StatelessWidget {
                                 Container(
                                   width: width * 0.5,
                                   child: TextFormField(
-                                    onChanged: (text) {},
+                                    controller: _passwordController,
                                     decoration: InputDecoration(
                                       border: const OutlineInputBorder(),
                                       labelText: "Password",
@@ -114,7 +123,18 @@ class LoginPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Navigator.popAndPushNamed(context, '/home');
+                                    if (_passwordController.text.length < 7) {
+                                      const snackBar = SnackBar(
+                                          content: Text(
+                                              'Please choose a password with more than 6 characters'));
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                    } else {
+                                      _signInOrSignUp(
+                                          context,
+                                          _emailController.text,
+                                          _passwordController.text);
+                                    }
                                   },
                                   child: Container(
                                       decoration: BoxDecoration(
@@ -172,5 +192,45 @@ class LoginPage extends StatelessWidget {
             )),
       ),
     );
+  }
+
+  void _signInOrSignUp(
+      BuildContext _context, String emailID, String password) async {
+    try {
+      await _firebaseAuth.createUserWithEmailAndPassword(
+          email: emailID, password: password);
+      users = FirebaseFirestore.instance.collection('users');
+      print('New user created.');
+      createUser(password);
+      Navigator.popAndPushNamed(_context, '/home');
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+        try {
+          await _firebaseAuth.signInWithEmailAndPassword(
+              email: emailID, password: password);
+          Navigator.popAndPushNamed(_context, '/home');
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'user-not-found') {
+            print('No user found for that email.');
+          } else if (e.code == 'wrong-password') {
+            print('Wrong password provided for that user.');
+          }
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> createUser(String password) {
+    return users
+        .doc(_firebaseAuth.currentUser!.uid)
+        .set({
+          'emailID': _firebaseAuth.currentUser!.email.toString(),
+          'password': password,
+        })
+        .then((value) => print("User Added"))
+        .catchError((error) => print("Failed to add user: $error"));
   }
 }

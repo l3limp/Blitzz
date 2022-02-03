@@ -1,4 +1,6 @@
 import 'package:blitzz/theme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -10,6 +12,12 @@ class HomeScreen extends StatelessWidget {
     final _theme = OurTheme();
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
+    late CollectionReference _users;
+    String _userID = "";
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    User? _user = FirebaseAuth.instance.currentUser;
+    _users = FirebaseFirestore.instance.collection('users');
+    _userID = _auth.currentUser!.uid;
 
     return SafeArea(
       child: Scaffold(
