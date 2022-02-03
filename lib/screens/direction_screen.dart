@@ -46,6 +46,10 @@ class DirectionScreen extends StatelessWidget {
                   child: GoogleMap(
                     compassEnabled: false,
                     zoomControlsEnabled: false,
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(15.3911, 73.8782),
+                      zoom: 16,
+                      tilt: 20,
                     ),
                   ),
                 ),
