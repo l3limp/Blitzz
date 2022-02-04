@@ -2,16 +2,20 @@ import 'package:blitzz/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TakeAPicture extends StatefulWidget {
-  const TakeAPicture({Key? key}) : super(key: key);
+class PicturePage extends StatefulWidget {
+  const PicturePage({Key? key}) : super(key: key);
 
   @override
-  _TakeAPictureState createState() => _TakeAPictureState();
+  _PicturePageState createState() => _PicturePageState();
 }
 
-class _TakeAPictureState extends State<TakeAPicture> {
+late Map arguments;
+String _address = "";
+
+class _PicturePageState extends State<PicturePage> {
   @override
   Widget build(BuildContext context) {
+    arguments = ModalRoute.of(context)!.settings.arguments as Map;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     OurTheme _theme = OurTheme();
@@ -25,7 +29,7 @@ class _TakeAPictureState extends State<TakeAPicture> {
             centerTitle: true,
             elevation: 0,
             backgroundColor: Colors.transparent,
-            title: Text("TAKE A PICTURE",
+            title: Text("OCR",
                 style: GoogleFonts.roboto(
                   textStyle: TextStyle(
                     color: _theme.primaryColor,
@@ -34,7 +38,7 @@ class _TakeAPictureState extends State<TakeAPicture> {
                 )),
           ),
           body: SingleChildScrollView(
-            physics: const RangeMaintainingScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
                 Padding(
@@ -46,11 +50,18 @@ class _TakeAPictureState extends State<TakeAPicture> {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border:
-                            Border.all(color: _theme.primaryColor, width: 2),
+                            Border.all(color: _theme.primaryColor, width: 3),
                         borderRadius: BorderRadius.circular(12)),
-                    child: Image.asset(
-                      "assets/images/address.jpeg",
-                      fit: BoxFit.fill,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: arguments['image'] != null
+                          ? Image.file(
+                              arguments['image']!,
+                              fit: BoxFit.contain,
+                            )
+                          : const FlutterLogo(
+                              size: 160.0,
+                            ),
                     ),
                   ),
                 ),
@@ -73,7 +84,8 @@ class _TakeAPictureState extends State<TakeAPicture> {
                       padding: EdgeInsets.fromLTRB(0, 10, width * 0.05, 15),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, '/directions');
+                          Navigator.pushNamed(context, '/directions',
+                              arguments: {'address': _address});
                         },
                         child: Container(
                             decoration: BoxDecoration(
@@ -95,7 +107,7 @@ class _TakeAPictureState extends State<TakeAPicture> {
                                 children: [
                                   Text(
                                     "BLITZZ",
-                                    style: GoogleFonts.lato(
+                                    style: GoogleFonts.roboto(
                                       textStyle: TextStyle(
                                           color: _theme.secondaryColor,
                                           letterSpacing: .5,
@@ -123,7 +135,10 @@ class _TakeAPictureState extends State<TakeAPicture> {
                     width: width * 0.9,
                     height: height * 0.22,
                     child: TextFormField(
-                      onChanged: (text) {},
+                      initialValue: arguments['address'],
+                      onChanged: (text) {
+                        _address = text;
+                      },
                       maxLines: 10,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
