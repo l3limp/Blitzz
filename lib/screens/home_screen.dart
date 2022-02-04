@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:blitzz/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -282,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final imageTemp = File(image.path);
     setState(() => this.image = imageTemp);
-    await decodeImage(image);
+    await compressImage(image);
   }
 
   Future clickImage(BuildContext _context) async {
@@ -291,7 +292,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final imageTemp = File(image.path);
     setState(() => this.image = imageTemp);
-    await decodeImage(image);
+    await compressImage(image);
+  }
+  compressImage(XFile image) async {
+    File compressedFile =
+        await FlutterNativeImage.compressImage(image.path, quality: 25);
+    XFile test = XFile(compressedFile.path);
+    await decodeImage(test);
   }
 
   decodeImage(XFile _image) async {
