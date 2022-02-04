@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:blitzz/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -130,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     InkWell(
                       onTap: () async {
-                        await pickImageFromGallery(context);
+                        await pickImage(context, ImageSource.gallery);
                       },
                       child: Container(
                         child: Center(
@@ -163,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        clickImage(context);
+                        pickImage(context, ImageSource.camera);
                       },
                       child: Container(
                         child: Center(
@@ -276,22 +277,28 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future pickImageFromGallery(BuildContext _context) async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+  Future pickImage(BuildContext _context, ImageSource source) async {
+    final image = await ImagePicker().pickImage(source: source);
     if (image == null) return;
 
     final imageTemp = File(image.path);
     setState(() => this.image = imageTemp);
-    await decodeImage(image);
+    await compressImage(image);
   }
 
-  Future clickImage(BuildContext _context) async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
-    if (image == null) return;
+  // Future clickImage(BuildContext _context) async {
+  //   final image = await ImagePicker().pickImage(source: ImageSource.camera);
+  //   if (image == null) return;
 
-    final imageTemp = File(image.path);
-    setState(() => this.image = imageTemp);
-    await decodeImage(image);
+  //   final imageTemp = File(image.path);
+  //   setState(() => this.image = imageTemp);
+  //   await compressImage(image);
+  // }
+  compressImage(XFile image) async {
+    File compressedFile =
+        await FlutterNativeImage.compressImage(image.path, quality: 25);
+    XFile test = XFile(compressedFile.path);
+    await decodeImage(test);
   }
 
   decodeImage(XFile _image) async {
@@ -304,9 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var multiPartFile =
         http.MultipartFile("files", stream, length, filename: _image.path);
     request.files.add(multiPartFile);
-    print("test message");
     var response = await request.send();
-    print(response.statusCode);
     response.stream.transform(utf8.decoder).listen((value) {
       String _address = value;
       List<String> address = [];
