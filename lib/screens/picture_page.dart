@@ -2,18 +2,20 @@ import 'package:blitzz/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class UploadAPicture extends StatefulWidget {
-  const UploadAPicture({Key? key}) : super(key: key);
+class PicturePage extends StatefulWidget {
+  const PicturePage({Key? key}) : super(key: key);
 
   @override
-  _UploadAPictureState createState() => _UploadAPictureState();
+  _PicturePageState createState() => _PicturePageState();
 }
 
-late TextEditingController _controller = TextEditingController();
+late Map arguments;
+String _address = "";
 
-class _UploadAPictureState extends State<UploadAPicture> {
+class _PicturePageState extends State<PicturePage> {
   @override
   Widget build(BuildContext context) {
+    arguments = ModalRoute.of(context)!.settings.arguments as Map;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     OurTheme _theme = OurTheme();
@@ -27,7 +29,7 @@ class _UploadAPictureState extends State<UploadAPicture> {
             centerTitle: true,
             elevation: 0,
             backgroundColor: Colors.transparent,
-            title: Text("UPLOAD A PICTURE",
+            title: Text("OCR",
                 style: GoogleFonts.roboto(
                   textStyle: TextStyle(
                     color: _theme.primaryColor,
@@ -36,7 +38,7 @@ class _UploadAPictureState extends State<UploadAPicture> {
                 )),
           ),
           body: SingleChildScrollView(
-            physics: const RangeMaintainingScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
                 Padding(
@@ -52,10 +54,14 @@ class _UploadAPictureState extends State<UploadAPicture> {
                         borderRadius: BorderRadius.circular(12)),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        "assets/images/address.jpeg",
-                        fit: BoxFit.fill,
-                      ),
+                      child: arguments['image'] != null
+                          ? Image.file(
+                              arguments['image']!,
+                              fit: BoxFit.contain,
+                            )
+                          : const FlutterLogo(
+                              size: 160.0,
+                            ),
                     ),
                   ),
                 ),
@@ -79,7 +85,7 @@ class _UploadAPictureState extends State<UploadAPicture> {
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, '/directions',
-                              arguments: {'address': _controller.text});
+                              arguments: {'address': _address});
                         },
                         child: Container(
                             decoration: BoxDecoration(
@@ -129,8 +135,10 @@ class _UploadAPictureState extends State<UploadAPicture> {
                     width: width * 0.9,
                     height: height * 0.22,
                     child: TextFormField(
-                      controller: _controller,
-                      onChanged: (text) {},
+                      initialValue: arguments['address'],
+                      onChanged: (text) {
+                        _address = text;
+                      },
                       maxLines: 10,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
