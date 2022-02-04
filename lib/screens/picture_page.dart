@@ -1,4 +1,6 @@
 import 'package:blitzz/theme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,6 +13,7 @@ class PicturePage extends StatefulWidget {
 
 late Map arguments;
 String _address = "";
+User? _user;
 
 class _PicturePageState extends State<PicturePage> {
   @override
@@ -19,6 +22,7 @@ class _PicturePageState extends State<PicturePage> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     OurTheme _theme = OurTheme();
+    _user = FirebaseAuth.instance.currentUser;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: SafeArea(
@@ -84,6 +88,8 @@ class _PicturePageState extends State<PicturePage> {
                       padding: EdgeInsets.fromLTRB(0, 10, width * 0.05, 15),
                       child: InkWell(
                         onTap: () {
+                          _setAddress();
+                          _address = "";
                           Navigator.pushNamed(context, '/directions',
                               arguments: {'address': _address});
                         },
@@ -170,5 +176,16 @@ class _PicturePageState extends State<PicturePage> {
         ),
       ),
     );
+  }
+
+  Future<void> _setAddress() {
+    CollectionReference _recents = FirebaseFirestore.instance
+        .collection('recent_locations')
+        .doc(_user!.uid)
+        .collection('recents');
+    return _recents.doc().set({
+      'address': _address.isNotEmpty ? _address : arguments['address'],
+      'timestamp': Timestamp.now()
+    });
   }
 }
