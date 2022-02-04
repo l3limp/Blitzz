@@ -274,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var length = await _image.length();
     var url = Uri.parse('https://api.ocr.space/parse/image');
     var request = http.MultipartRequest("POST", url);
-    request.fields['apikey'] = 'K87516539188957';
+    request.fields['apikey'] = '6bd831554588957';
     request.fields['language'] = 'eng';
     var multiPartFile =
         http.MultipartFile("files", stream, length, filename: _image.path);
