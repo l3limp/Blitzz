@@ -17,7 +17,7 @@ void main() {
       ),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const SplashScreen(),
+        '/': (context) => const OcrTest(),
         '/initialise': (context) => const Initialising(),
         '/home': (context) => const HomeScreen(),
         '/directions': (context) => const DirectionScreen(),
