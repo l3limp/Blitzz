@@ -184,10 +184,17 @@ class _SplashScreenState extends State<SplashScreen>
                             ),
                             SizedBox(
                                 height: MediaQuery.of(context).size.height / 8),
-                            SizedBox(
-                                height: MediaQuery.of(context).size.height / 4,
-                                child: Image.asset(
-                                    "assets/images/blitzz_logo.png")),
+                            Hero(
+                              tag: 'logo',
+                              child: Material(
+                                color: Colors.transparent,
+                                child: SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height / 4,
+                                    child: Image.asset(
+                                        "assets/images/blitzz_logo.png")),
+                              ),
+                            ),
                           ],
                         ),
                       )),
