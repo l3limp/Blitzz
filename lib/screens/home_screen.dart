@@ -93,14 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             }
                           },
                         ),
-                        // Column(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //   children: [
-                        //     eventsQuery.docs.isNotEmpty
-                        //         ? _buildListTiles()
-                        //         : const SizedBox()
-                        //   ],
-                        // ),
                       ),
                     ],
                   ),
@@ -271,20 +263,15 @@ class _HomeScreenState extends State<HomeScreen> {
       await compressImage(image);
     } on PlatformException catch (e) {
       const snackBar = SnackBar(
-        content: Text('Failed to pick Image'),
-      );
+          content: Text(
+            'Failed to pick Image',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.redAccent);
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 
-  // Future clickImage(BuildContext _context) async {
-  //   final image = await ImagePicker().pickImage(source: ImageSource.camera);
-  //   if (image == null) return;
-
-  //   final imageTemp = File(image.path);
-  //   setState(() => this.image = imageTemp);
-  //   await compressImage(image);
-  // }
   compressImage(XFile image) async {
     File compressedFile =
         await FlutterNativeImage.compressImage(image.path, quality: 25);
@@ -319,20 +306,20 @@ class _HomeScreenState extends State<HomeScreen> {
       Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
       return Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
         child: ListTile(
           onTap: () {
             Navigator.pushNamed(context, '/directions',
                 arguments: {'address': data['address']});
           },
-          leading: Text(
-            data['address'].toString().length > 67
-                ? data['address'].toString().substring(0, 68) + "..."
+          subtitle: Text(
+            data['address'].toString().length > 75
+                ? data['address'].toString().substring(0, 74) + "..."
                 : data['address'],
             style: GoogleFonts.roboto(
               textStyle: TextStyle(
                 color: _theme.primaryColor,
-                fontSize: 18,
+                fontSize: 16,
               ),
             ),
           ),
