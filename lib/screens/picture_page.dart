@@ -89,9 +89,10 @@ class _PicturePageState extends State<PicturePage> {
                       child: InkWell(
                         onTap: () {
                           _setAddress();
-                          _address = "";
+
                           Navigator.pushNamed(context, '/directions',
                               arguments: {'address': _address});
+                          _address = "";
                         },
                         child: Container(
                             decoration: BoxDecoration(
