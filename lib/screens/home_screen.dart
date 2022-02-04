@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     InkWell(
                       onTap: () async {
-                        await pickImageFromGallery(context);
+                        await pickImage(context, ImageSource.gallery);
                       },
                       child: Container(
                         child: Center(
@@ -164,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        clickImage(context);
+                        pickImage(context, ImageSource.camera);
                       },
                       child: Container(
                         child: Center(
@@ -277,8 +277,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future pickImageFromGallery(BuildContext _context) async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+  Future pickImage(BuildContext _context, ImageSource source) async {
+    final image = await ImagePicker().pickImage(source: source);
     if (image == null) return;
 
     final imageTemp = File(image.path);
@@ -286,14 +286,14 @@ class _HomeScreenState extends State<HomeScreen> {
     await compressImage(image);
   }
 
-  Future clickImage(BuildContext _context) async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
-    if (image == null) return;
+  // Future clickImage(BuildContext _context) async {
+  //   final image = await ImagePicker().pickImage(source: ImageSource.camera);
+  //   if (image == null) return;
 
-    final imageTemp = File(image.path);
-    setState(() => this.image = imageTemp);
-    await compressImage(image);
-  }
+  //   final imageTemp = File(image.path);
+  //   setState(() => this.image = imageTemp);
+  //   await compressImage(image);
+  // }
   compressImage(XFile image) async {
     File compressedFile =
         await FlutterNativeImage.compressImage(image.path, quality: 25);
@@ -311,9 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var multiPartFile =
         http.MultipartFile("files", stream, length, filename: _image.path);
     request.files.add(multiPartFile);
-    print("test message");
     var response = await request.send();
-    print(response.statusCode);
     response.stream.transform(utf8.decoder).listen((value) {
       String _address = value;
       List<String> address = [];
