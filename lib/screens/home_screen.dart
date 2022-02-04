@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:blitzz/theme.dart';
@@ -262,12 +263,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future pickImage(BuildContext _context, ImageSource source) async {
-    final image = await ImagePicker().pickImage(source: source);
-    if (image == null) return;
-
-    final imageTemp = File(image.path);
-    setState(() => this.image = imageTemp);
-    await compressImage(image);
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+      final imageTemp = File(image.path);
+      this.image = imageTemp;
+      await compressImage(image);
+    } on PlatformException catch (e) {
+      const snackBar = SnackBar(
+        content: Text('Failed to pick Image'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   // Future clickImage(BuildContext _context) async {
@@ -297,6 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
     request.files.add(multiPartFile);
     var response = await request.send();
     response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
       Map data = jsonDecode(value);
       Navigator.pushNamed(context, '/picture_page', arguments: {
         'image': image,
