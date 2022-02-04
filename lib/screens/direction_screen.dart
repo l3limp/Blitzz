@@ -91,30 +91,31 @@ class _DirectionScreenState extends State<DirectionScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15.0),
-                        color: _theme.secondaryColor,
+                        color: Colors.white,
                         boxShadow: [
                           BoxShadow(
                               color: _theme.primaryColor,
                               blurRadius: 2,
                               offset: const Offset(1, 2)),
                         ],
-                        border: Border.all(color: Colors.white, width: 2),
+                        border:
+                            Border.all(color: _theme.primaryColor, width: 2),
                       ),
                       width: _width * 0.38,
                       height: _height * 0.08,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.home,
-                            color: Colors.white,
+                            color: _theme.primaryColor,
                             size: 35.0,
                           ),
                           Text(
                             "HOME",
                             style: TextStyle(
                                 fontFamily: _theme.font,
-                                color: Colors.white,
+                                color: _theme.primaryColor,
                                 fontSize: 24.0,
                                 letterSpacing: 1.5,
                                 fontWeight: FontWeight.w600),
@@ -133,30 +134,31 @@ class _DirectionScreenState extends State<DirectionScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        color: _theme.secondaryColor,
+                        color: Colors.white,
                         boxShadow: [
                           BoxShadow(
                               color: _theme.primaryColor,
                               blurRadius: 2,
                               offset: const Offset(1, 2)),
                         ],
-                        border: Border.all(color: Colors.white, width: 2),
+                        border:
+                            Border.all(color: _theme.primaryColor, width: 2),
                       ),
                       width: _width * 0.54,
                       height: _height * 0.08,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.directions,
-                            color: Colors.white,
+                            color: _theme.primaryColor,
                             size: 35.0,
                           ),
                           Text(
                             "DIRECTIONS",
                             style: TextStyle(
                                 fontFamily: _theme.font,
-                                color: Colors.white,
+                                color: _theme.primaryColor,
                                 fontSize: 24.0,
                                 letterSpacing: 1.5,
                                 fontWeight: FontWeight.w600),

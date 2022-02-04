@@ -1,12 +1,22 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:blitzz/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  File? image;
   @override
   Widget build(BuildContext context) {
     final _theme = OurTheme();
@@ -119,8 +129,8 @@ class HomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/upload_a_picture');
+                      onTap: () async {
+                        await pickImageFromGallery(context);
                       },
                       child: Container(
                         child: Center(
@@ -153,7 +163,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, '/take_a_picture');
+                        clickImage(context);
                       },
                       child: Container(
                         child: Center(
@@ -264,5 +274,47 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future pickImageFromGallery(BuildContext _context) async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) return;
+
+    final imageTemp = File(image.path);
+    setState(() => this.image = imageTemp);
+    await decodeImage(image);
+  }
+
+  Future clickImage(BuildContext _context) async {
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (image == null) return;
+
+    final imageTemp = File(image.path);
+    setState(() => this.image = imageTemp);
+    await decodeImage(image);
+  }
+
+  decodeImage(XFile _image) async {
+    var stream = http.ByteStream(_image.openRead());
+    var length = await _image.length();
+    var url = Uri.parse('https://api.ocr.space/parse/image');
+    var request = http.MultipartRequest("POST", url);
+    request.fields['apikey'] = 'K87516539188957';
+    request.fields['language'] = 'eng';
+    var multiPartFile =
+        http.MultipartFile("files", stream, length, filename: _image.path);
+    request.files.add(multiPartFile);
+    print("test message");
+    var response = await request.send();
+    print(response.statusCode);
+    response.stream.transform(utf8.decoder).listen((value) {
+      String _address = value;
+      List<String> address = [];
+      address = _address.split("ParsedText\":\"");
+      address = address[1].split("\",\"Error");
+      address[0] = address[0].replaceAll("\\r\\n", " ");
+      Navigator.pushNamed(context, '/picture_page',
+          arguments: {'image': image, 'address': address[0]});
+    });
   }
 }
