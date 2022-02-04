@@ -297,13 +297,12 @@ class _HomeScreenState extends State<HomeScreen> {
     request.files.add(multiPartFile);
     var response = await request.send();
     response.stream.transform(utf8.decoder).listen((value) {
-      String _address = value;
-      List<String> address = [];
-      address = _address.split("ParsedText\":\"");
-      address = address[1].split("\",\"Error");
-      address[0] = address[0].replaceAll("\\r\\n", " ");
-      Navigator.pushNamed(context, '/picture_page',
-          arguments: {'image': image, 'address': address[0]});
+      Map data = jsonDecode(value);
+      Navigator.pushNamed(context, '/picture_page', arguments: {
+        'image': image,
+        'address': data['ParsedResults'][0]['ParsedText'] ??
+            data['ParsedResults'][0]['ErrorMessage']
+      });
     });
   }
 
