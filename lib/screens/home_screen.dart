@@ -18,15 +18,22 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   File? image;
+  final _theme = OurTheme();
+  late Stream<QuerySnapshot> _recentsStream;
+  late QuerySnapshot eventsQuery;
   @override
   Widget build(BuildContext context) {
-    final _theme = OurTheme();
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
-    late CollectionReference _recents;
     FirebaseAuth _auth = FirebaseAuth.instance;
     User? _user = FirebaseAuth.instance.currentUser;
-    _recents = FirebaseFirestore.instance.collection('recent_locations');
+    _recentsStream = FirebaseFirestore.instance
+        .collection('recent_locations')
+        .doc(_user!.uid)
+        .collection('recents')
+        .orderBy('timestamp', descending: true)
+        .limit(3)
+        .snapshots();
 
     return SafeArea(
       child: Scaffold(
@@ -71,53 +78,28 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         height: _height * 0.28,
                         width: _width * 0.82,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ListTile(
-                              onTap: () {
-                                print("List tile pressed");
-                              },
-                              leading: Text(
-                                "Bla Bla Bla Bla",
-                                style: GoogleFonts.roboto(
-                                  textStyle: TextStyle(
-                                    color: _theme.primaryColor,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            ListTile(
-                              onTap: () {
-                                print("List tile pressed");
-                              },
-                              leading: Text(
-                                "Bla Bla Bla Bla",
-                                style: GoogleFonts.roboto(
-                                  textStyle: TextStyle(
-                                    color: _theme.primaryColor,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            ListTile(
-                              onTap: () {
-                                print("List tile pressed");
-                              },
-                              leading: Text(
-                                "Bla Bla Bla Bla",
-                                style: GoogleFonts.roboto(
-                                  textStyle: TextStyle(
-                                    color: _theme.primaryColor,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                        child: StreamBuilder<QuerySnapshot>(
+                          stream: _recentsStream,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasData) {
+                              return ListView(
+                                children: _getRecentList(snapshot),
+                              );
+                            } else {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                          },
                         ),
+                        // Column(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //   children: [
+                        //     eventsQuery.docs.isNotEmpty
+                        //         ? _buildListTiles()
+                        //         : const SizedBox()
+                        //   ],
+                        // ),
                       ),
                     ],
                   ),
@@ -206,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                       child: Center(
                         child: Text(
-                          _user!.email.toString(),
+                          _user.email.toString(),
                           textAlign: TextAlign.center,
                           style: GoogleFonts.roboto(
                             textStyle: TextStyle(
@@ -226,8 +208,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               blurRadius: 1,
                               offset: const Offset(1, 1)),
                         ],
-                        border:
-                            Border.all(color: _theme.primaryColor, width: 2),
+                        border: Border.all(
+                          color: _theme.primaryColor,
+                          width: 2,
+                        ),
                       ),
                       height: _height * 0.1,
                       width: _width * 0.6,
@@ -321,5 +305,32 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.pushNamed(context, '/picture_page',
           arguments: {'image': image, 'address': address[0]});
     });
+  }
+
+  _getRecentList(AsyncSnapshot<QuerySnapshot> snapshot) {
+    return snapshot.data!.docs.map((DocumentSnapshot document) {
+      Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        child: ListTile(
+          onTap: () {
+            Navigator.pushNamed(context, '/directions',
+                arguments: {'address': data['address']});
+          },
+          leading: Text(
+            data['address'].toString().length > 67
+                ? data['address'].toString().substring(0, 68) + "..."
+                : data['address'],
+            style: GoogleFonts.roboto(
+              textStyle: TextStyle(
+                color: _theme.primaryColor,
+                fontSize: 18,
+              ),
+            ),
+          ),
+        ),
+      );
+    }).toList();
   }
 }
