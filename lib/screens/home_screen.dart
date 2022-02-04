@@ -255,21 +255,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future pickImage(BuildContext _context, ImageSource source) async {
-    try {
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      this.image = imageTemp;
-      await compressImage(image);
-    } on PlatformException catch (e) {
-      const snackBar = SnackBar(
-          content: Text(
-            'Failed to pick Image',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.redAccent);
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
+    final image = await ImagePicker().pickImage(source: source);
+    if (image == null) return;
+    final imageTemp = File(image.path);
+    this.image = imageTemp;
+    await compressImage(image);
   }
 
   compressImage(XFile image) async {
