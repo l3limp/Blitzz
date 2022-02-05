@@ -8,7 +8,7 @@
         android:label="blitzz"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyAsUDVWJpw7ghpcpN_u8so6B5EvykVcECs"/>
+           android:value="apiiii_keyyyy"/>
            
         <activity
             android:name=".MainActivity"
